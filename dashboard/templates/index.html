@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-IDS | Intrusion Detection Dashboard</title>
+    
+    <!-- Chart.js for real-time charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="shield-icon">🛡️</span>
+                    <span class="logo-text">AI-IDS</span>
+                </div>
+                <h1>Intrusion Detection System</h1>
+            </div>
+            <div class="header-right">
+                <div class="status-indicator" id="systemStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Initializing...</span>
+                </div>
+                <button class="btn-reset" onclick="resetStats()">Reset Stats</button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- KPI Cards -->
+            <section class="kpi-section">
+                <div class="kpi-card" id="totalTrafficCard">
+                    <div class="kpi-header">
+                        <h3>Total Traffic</h3>
+                        <span class="icon">📊</span>
+                    </div>
+                    <div class="kpi-value" id="totalPackets">0</div>
+                    <div class="kpi-label">packets analyzed</div>
+                </div>
+
+                <div class="kpi-card" id="normalTrafficCard">
+                    <div class="kpi-header">
+                        <h3>Normal Traffic</h3>
+                        <span class="icon">✅</span>
+                    </div>
+                    <div class="kpi-value" id="normalPackets">0</div>
+                    <div class="kpi-label" id="normalPercent">0%</div>
+                </div>
+
+                <div class="kpi-card threat" id="attackTrafficCard">
+                    <div class="kpi-header">
+                        <h3>Attacks Detected</h3>
+                        <span class="icon">⚠️</span>
+                    </div>
+                    <div class="kpi-value" id="attackPackets">0</div>
+                    <div class="kpi-label" id="attackPercent">0%</div>
+                </div>
+
+                <div class="kpi-card" id="alertCountCard">
+                    <div class="kpi-header">
+                        <h3>Active Alerts</h3>
+                        <span class="icon">🚨</span>
+                    </div>
+                    <div class="kpi-value" id="alertCount">0</div>
+                    <div class="kpi-label">security threats</div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2>Attack Distribution</h2>
+                    </div>
+                    <canvas id="attackDistributionChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2>Traffic Status</h2>
+                    </div>
+                    <canvas id="trafficStatusChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Real-time Charts -->
+            <section class="charts-section">
+                <div class="chart-container full-width">
+                    <div class="chart-header">
+                        <h2>Real-time Traffic Trend</h2>
+                    </div>
+                    <canvas id="trafficTrendChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Alerts and Logs Section -->
+            <section class="logs-section">
+                <div class="logs-container">
+                    <div class="logs-panel">
+                        <div class="panel-header">
+                            <h2>🚨 Recent Alerts</h2>
+                            <span class="alert-count" id="alertBadge">0</span>
+                        </div>
+                        <div class="alerts-table" id="alertsContainer">
+                            <div class="empty-state">
+                                <p>No alerts detected</p>
+                                <span>🟢 System is secure</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="logs-panel">
+                        <div class="panel-header">
+                            <h2>📋 Traffic Logs</h2>
+                            <span class="log-count" id="logBadge">0</span>
+                        </div>
+                        <div class="logs-table" id="logsContainer">
+                            <div class="empty-state">
+                                <p>Waiting for traffic...</p>
+                                <span>⏳ Analyzing network</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Information -->
+            <section class="info-section">
+                <div class="info-card">
+                    <h3>System Information</h3>
+                    <div class="info-content" id="systemInfo">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>AI-Enhanced Intrusion Detection System | Real-time Threat Detection & Analysis</p>
+            <p id="lastUpdate">Last update: --:--:--</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
